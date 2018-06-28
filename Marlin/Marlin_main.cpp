@@ -1167,13 +1167,17 @@ inline void get_serial_commands() {
             SERIAL_PROTOCOLLNPGM(MSG_FILE_PRINTED);
             #if ENABLED(PRINTER_EVENT_LEDS)
               LCD_MESSAGEPGM(MSG_INFO_COMPLETED_PRINTS);
-              leds.set_green();
-              #if HAS_RESUME_CONTINUE
-                enqueue_and_echo_commands_P(PSTR("M0")); // end of the queue!
+              #if ENABLED(NEOPIXEL_LED) && ENABLED(NEOPIXEL_STARTUP_TEST)
+                rainbowCycle(10);
               #else
-                safe_delay(1000);
+                leds.set_green();
+                #if HAS_RESUME_CONTINUE
+                  enqueue_and_echo_commands_P(PSTR("M0")); // end of the queue!
+                #else
+                  safe_delay(1000);
+                #endif
+                leds.set_off();
               #endif
-              leds.set_off();
             #endif
             card.checkautostart(true);
           }

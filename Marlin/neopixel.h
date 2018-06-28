@@ -40,5 +40,7 @@
 
 void setup_neopixel();
 void set_neopixel_color(const uint32_t color);
+uint32_t Wheel(byte WheelPos);
+void rainbowCycle(uint8_t wait);
 
 extern Adafruit_NeoPixel pixels;
